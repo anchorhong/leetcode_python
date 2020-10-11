@@ -31,13 +31,3 @@ class Solution:
                 del bucket[math.floor(nums[i - k] / (t + 1))]
             bucket[bucket_id] = nums[i]
         return False
-
-    def containsNearbyAlmostDuplicate(self, nums: List[int], k: int,
-                                      t: int) -> bool:
-        for i in range(len(nums) - 1):
-            j_max = min(i + k + 1, len(nums))
-            for j in range(i + 1, j_max):
-                if int(math.fabs(nums[i] - nums[j])) <= t:
-                    return True
-
-        return False

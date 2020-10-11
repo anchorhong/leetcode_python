@@ -30,8 +30,25 @@ class Solution:
             res_list.append(list(r))
         return res_list
 
+    def four_sum(self, nums: List[int], target: int) -> List[List[int]]:
+        nums.sort()
+        res = dict()
+
+        def dfs(nums: List[int], combine: List[int], idx: int, s: int):
+            if s == target and len(combine) == 4 and tuple(combine) not in res:
+                res[tuple(combine)] = combine
+            if len(combine) >= 4 or idx == len(nums):
+                return
+            tmp = combine.copy()
+            tmp.append(nums[idx])
+            dfs(nums, tmp, idx + 1, s + nums[idx])
+            dfs(nums, combine, idx + 1, s)
+
+        dfs(nums, list(), 0, 0)
+        return list(res.values())
+
 
 if __name__ == "__main__":
-    nums = [-3, -2, -1, 0, 0, 1, 2, 3]
-    target = 0
-    print(Solution().fourSum(nums, target))
+    nums = [-1, 0, 1, 2, -1, -4]
+    target = -1
+    print(Solution().four_sum(nums, target))
