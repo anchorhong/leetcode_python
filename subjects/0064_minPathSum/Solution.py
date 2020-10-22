@@ -27,7 +27,6 @@ class Solution:
         m, n = len(grid), len(grid[0])
         dp = [float('inf') for _ in range(n)]
         for i in range(0, m):
-            left = float('inf')
             for j in range(n):
                 if i == 0 and j == 0:
                     dp[j] = grid[i][j]
@@ -40,6 +39,13 @@ class Solution:
                 left = dp[j]
         return dp[n - 1]
 
+    def min_path_sum_opt_space2(self, grid: List[List[int]]) -> int:
+        dp = [float('inf') if i != 1 else 0 for i in range(len(grid[0]) + 1)]
+        for row in grid:
+            for idx, elem in enumerate(row):
+                dp[idx + 1] = min(dp[idx], dp[idx + 1]) + elem
+        return dp[-1]
+
 
 if __name__ == "__main__":
     grid = [[1, 3, 1],
@@ -47,4 +53,5 @@ if __name__ == "__main__":
             [4, 2, 1]]
 
     print(Solution().min_path_sum_opt_space(grid))
+    print(Solution().min_path_sum_opt_space2(grid))
     print(Solution().min_path_sum(grid))
